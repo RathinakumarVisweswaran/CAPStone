@@ -22,12 +22,6 @@ public class ConvolutionLayer implements Layer {
     List<Neuron> neurons;
 
     public ConvolutionLayer() {
-    }
-
-    public ConvolutionLayer(int numberOfFeatures, int stride, int padding) {
-        this.numberOfFeatures = numberOfFeatures;
-        this.stride = stride;
-        this.padding = padding;
         neurons = new ArrayList<>();
     }
 
@@ -71,10 +65,10 @@ public class ConvolutionLayer implements Layer {
         for(int feature=1; feature<=numberOfFeatures; feature++)
         {
             DataVolume weightVolume = new DataVolume(filterHeight,filterWidth,filterDepth);
-            for(int l=0; l< filterHeight; l++)
+            for(int h=0; h< filterHeight; h++)
                 for(int w=0; w<filterWidth; w++)
                     for(int d=0; d<filterDepth; d++)
-                        weightVolume.data[l][w][d] = weightIterater.next().floatValue();
+                        weightVolume.data[h][w][d] = weightIterater.next().floatValue();
             ConvolNeuron convNeuron = new ConvolNeuron(weightVolume, weightIterater.next().floatValue(), feature);
             neurons.add(convNeuron);
         }
