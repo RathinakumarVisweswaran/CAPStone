@@ -19,13 +19,13 @@
       }
     },
     {
-      "type":"subSamplingLayer",
+      "type":"subSampling",
       "layerConfig": {
         "dimension": [2,2]
       }
     },
     {
-      "type":"fullyConnectedLayer",
+      "type":"fullyConnected",
       "layerConfig":  {
 
       }

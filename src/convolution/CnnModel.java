@@ -11,27 +11,15 @@ import layers.LayerFactory;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
-public class TrainedModel {
+public class CnnModel {
 
     public List<Layer> layers;
     float[][][] inputVolume, outputVolume;
 
-    public static void main (String[] args) throws Exception {
-        String modelJson = "cnn.json";
-        TrainedModel model = new TrainedModel();
-        model.loadModel(modelJson);
-
-    }
-
-    public void loadModel(String jsonFile) throws Exception {
-
+    public CnnModel(JSONObject config){
         this.layers = new ArrayList<>();
-
-        JSONParser parser = new JSONParser();
-        JSONObject config = (JSONObject)parser.parse(new FileReader(jsonFile));
         JSONArray layers = (JSONArray) config.get("layers");
         Iterator<JSONObject> iterator = layers.iterator();
-
         while (iterator.hasNext()) {
             JSONObject jsonLayer = iterator.next();
             String type = (String) jsonLayer.get("type");
