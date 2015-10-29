@@ -62,14 +62,14 @@ public class ConvolutionLayer implements Layer {
         filterDepth = dimIterater.next().intValue();
         JSONArray weights = (JSONArray) config.get("weights");
         Iterator<Number> weightIterater = weights.iterator();
-        for(int feature=1; feature<=numberOfFeatures; feature++)
+        for(int feature=0; feature<numberOfFeatures; feature++)
         {
             DataVolume weightVolume = new DataVolume(filterHeight,filterWidth,filterDepth);
             for(int h=0; h< filterHeight; h++)
                 for(int w=0; w<filterWidth; w++)
                     for(int d=0; d<filterDepth; d++)
                         weightVolume.data[h][w][d] = weightIterater.next().floatValue();
-            ConvolNeuron convNeuron = new ConvolNeuron(weightVolume, weightIterater.next().floatValue(), feature);
+            ConvolNeuron convNeuron = new ConvolNeuron(weightVolume, weightIterater.next().floatValue(), feature, stride);
             neurons.add(convNeuron);
         }
     }

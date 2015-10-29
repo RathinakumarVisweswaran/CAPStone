@@ -14,4 +14,14 @@ public class DataVolume {
         data = new float[height][width][depth];
     }
 
+    public float getElement(int height, int width, int depth)
+    {
+        return data[height][width][depth];
+    }
+
+    public void setElement(int height, int width, int depth, float value)
+    {
+        data[height][width][depth] = value;
+    }
+
 }

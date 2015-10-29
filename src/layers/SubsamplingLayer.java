@@ -11,12 +11,18 @@ import java.util.Iterator;
  */
 public class SubsamplingLayer implements Layer{
 
-    int height, width;
+    int height, width, stride;
+
+    public SubsamplingLayer(int height, int width, int stride) {
+        this.height = height;
+        this.width = width;
+        this.stride = stride;
+    }
 
     @Override
     public DataVolume processVolume(DataVolume inputVolume) {
 
-        DataVolume outputVolume = new DataVolume(inputVolume.height/height, inputVolume.width/width, inputVolume.depth);
+        DataVolume outputVolume = new DataVolume(inputVolume.height/stride, inputVolume.width/stride, inputVolume.depth);
 
         for(int d=0; d<outputVolume.depth; d++)
             for(int h=0; h<outputVolume.height; h++)
@@ -25,10 +31,9 @@ public class SubsamplingLayer implements Layer{
                     float max = Float.MIN_VALUE;
                     for(int hh=0; hh<height; hh++)
                         for(int ww=0; ww<height; ww++)
-                            max = Math.max(max, inputVolume.data[h*height + hh][w*width +ww][d]);
+                            max = Math.max(max, inputVolume.data[h*stride + hh][w*stride +ww][d]);
                     outputVolume.data[h][w][d] = max;
                 }
-
         return outputVolume;
     }
 
@@ -38,5 +43,6 @@ public class SubsamplingLayer implements Layer{
         Iterator<Number> dimIterator = dimensions.iterator();
         height = dimIterator.next().intValue();
         width = dimIterator.next().intValue();
+        width = (int)(long)config.get("stride");
     }
 }
