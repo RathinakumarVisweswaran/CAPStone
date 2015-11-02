@@ -7,10 +7,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Rathinakumar on 10/23/2015.
@@ -23,9 +21,17 @@ public class ImageClassifier {
 
     public static void main (String[] args) throws Exception {
         ImageClassifier ic = new ImageClassifier();
-        DataVolume in = ic.loadImage("TestImages" + File.separator + "thunderbird-v2-32x32.png");
-
-        ic.loadModel("TestModel");
+        //DataVolume in = ic.loadImage("TestImages" + File.separator + "thunderbird-v2-32x32.png");
+        float[][][] input  = new float[9][9][3];
+        Random r = new Random();
+        for(int i=0;i<9; i++)
+            for(int j=0;j<9; j++)
+                for(int k=0;k<3; k++)
+                    input[i][j][k] = r.nextInt(15)* r.nextFloat();
+        DataVolume in = new DataVolume(9,9,3);
+        in.setData(input);
+        CnnModel model = ic.loadModel("dummy");
+        model.evaluate(in);
     }
 
     public DataVolume loadImage(String img) throws IOException {
@@ -70,13 +76,13 @@ public class ImageClassifier {
             modelStore.mkdir();
     }
 
-    public String loadModel(String modelName) throws Exception
+    public CnnModel loadModel(String modelName) throws Exception
     {
-        String modelJson = "modelStore"+ File.separator+""+modelName+".json";
+        String modelJson = "src"+File.separator+"modelStore"+ File.separator+""+modelName+".json";
         JSONParser parser = new JSONParser();
         JSONObject config = (JSONObject)parser.parse(new FileReader(modelJson));
         CnnModel model = new CnnModel(config);
-        return "";
+        return model;
     }
 
 }

@@ -13,6 +13,11 @@ public class SubsamplingLayer implements Layer{
 
     int height, width, stride;
 
+    public SubsamplingLayer()
+    {
+
+    }
+
     public SubsamplingLayer(int height, int width, int stride) {
         this.height = height;
         this.width = width;
@@ -43,6 +48,6 @@ public class SubsamplingLayer implements Layer{
         Iterator<Number> dimIterator = dimensions.iterator();
         height = dimIterator.next().intValue();
         width = dimIterator.next().intValue();
-        width = (int)(long)config.get("stride");
+        stride = (int)(long)config.get("stride");
     }
 }

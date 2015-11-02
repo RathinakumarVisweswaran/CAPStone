@@ -31,7 +31,7 @@ public class FullyConnectedLayer implements Layer {
 
     @Override
     public void parseConfig(JSONObject config) {
-        numberOfNeurons = (int)(long) config.get("numberOfFeatures");
+        numberOfNeurons = (int)(long) config.get("numberOfNeurons");
         weightLength = (int)(long) config.get("weightLength");
         JSONArray weights = (JSONArray) config.get("weights");
         Iterator<Number> weightIterater = weights.iterator();
@@ -39,7 +39,7 @@ public class FullyConnectedLayer implements Layer {
         {
             DataVolume weightArray = new DataVolume(1,1,weightLength);
             for(int w=0; w<weightLength; w++)
-                weightArray.setElement(1,1,w,(float) weightIterater.next());
+                weightArray.setElement(0,0,w, weightIterater.next().floatValue());
             neurons.add(new FullyConnectedNeuron(weightArray, n));
         }
     }
