@@ -1,11 +1,12 @@
 import convolution.CnnModel;
+import convolution.DataVolume;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileReader;
-import java.io.FilenameFilter;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +23,29 @@ public class ImageClassifier {
 
     public static void main (String[] args) throws Exception {
         ImageClassifier ic = new ImageClassifier();
+        DataVolume in = ic.loadImage("TestImages" + File.separator + "thunderbird-v2-32x32.png");
 
-        //ic.loadModel(modelJson)
+        ic.loadModel("TestModel");
+    }
+
+    public DataVolume loadImage(String img) throws IOException {
+        File imageFile = new File(img);
+
+        BufferedImage image = ImageIO.read(imageFile);
+        int width = image.getWidth();
+        int height = image.getHeight();
+        DataVolume input = new DataVolume(height,width,3);
+
+        for(int h=0; h<height; h++){
+            for(int w=0; w<width; w++){
+                Color c = new Color(image.getRGB(w, h));
+                input.setElement(h,w,0,c.getRed());
+                input.setElement(h,w,1,c.getGreen());
+                input.setElement(h,w,2,c.getBlue());
+                //System.out.println("S.No: " + count + " Red: " + c.getRed() +"  Green: " + c.getGreen() + " Blue: " + c.getBlue());
+            }
+        }
+        return input;
     }
 
     public ImageClassifier()
@@ -50,7 +72,7 @@ public class ImageClassifier {
 
     public String loadModel(String modelName) throws Exception
     {
-        String modelJson = "modelStore"+ File.separator+"TestModel.json";
+        String modelJson = "modelStore"+ File.separator+""+modelName+".json";
         JSONParser parser = new JSONParser();
         JSONObject config = (JSONObject)parser.parse(new FileReader(modelJson));
         CnnModel model = new CnnModel(config);
