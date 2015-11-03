@@ -9,11 +9,13 @@ public class FullyConnectedNeuron implements Neuron {
 
     DataVolume weights;
     int position=0;
+    float bias;
 
-    public FullyConnectedNeuron(DataVolume weights, int position)
+    public FullyConnectedNeuron(DataVolume weights, float bias, int position)
     {
         this.weights = weights;
         this.position = position;
+        this.bias = bias;
     }
 
     @Override
@@ -24,6 +26,6 @@ public class FullyConnectedNeuron implements Neuron {
             for(int w=0; w<inputVolume.width; w++)
                 for(int d=0; d<inputVolume.depth; d++)
                     sum+=(weights.getElement(0,0,wight++)*inputVolume.getElement(h,w,d));
-        outputVolume.setElement(0,0,position, sum);
+        outputVolume.setElement(0,0,position, sum+bias);
     }
 }

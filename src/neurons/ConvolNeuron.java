@@ -29,8 +29,8 @@ public class ConvolNeuron implements Neuron{
                 for(int hh=0; hh<weightMatrix.height; hh++)
                     for(int ww=0; ww<weightMatrix.width; ww++)
                         for(int dd=0; dd<weightMatrix.depth; dd++)
-                            sum+=(weightMatrix.getElement(h*stride+hh, w*stride+ww, dd));
-                outputVolume.setElement(h,w,position,sum);
+                            sum+=(inputVolume.getElement(h*stride+hh, w*stride+ww, dd) * weightMatrix.getElement(hh, ww, dd));
+                outputVolume.setElement(h,w,position,sum+bias);
             }
         return;
     }

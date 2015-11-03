@@ -30,8 +30,11 @@ public class ImageClassifier {
                     input[i][j][k] = r.nextInt(15)* r.nextFloat();
         DataVolume in = new DataVolume(9,9,3);
         in.setData(input);
+        System.out.println("start time : "+System.currentTimeMillis());
         CnnModel model = ic.loadModel("dummy");
+        System.out.println("load complete time : "+System.currentTimeMillis());
         model.evaluate(in);
+        System.out.println("model test time : " + System.currentTimeMillis());
     }
 
     public DataVolume loadImage(String img) throws IOException {

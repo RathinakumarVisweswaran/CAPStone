@@ -40,7 +40,7 @@ public class FullyConnectedLayer implements Layer {
             DataVolume weightArray = new DataVolume(1,1,weightLength);
             for(int w=0; w<weightLength; w++)
                 weightArray.setElement(0,0,w, weightIterater.next().floatValue());
-            neurons.add(new FullyConnectedNeuron(weightArray, n));
+            neurons.add(new FullyConnectedNeuron(weightArray, weightIterater.next().floatValue(), n));
         }
     }
 }
