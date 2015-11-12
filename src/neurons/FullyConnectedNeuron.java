@@ -19,6 +19,12 @@ public class FullyConnectedNeuron implements Neuron {
     }
 
     @Override
+    public void setBias(float bias)
+    {
+        this.bias = bias;
+    }
+
+    @Override
     public void processVolume(DataVolume inputVolume, DataVolume outputVolume) {
         int wight=0;
         float sum = 0.0f;

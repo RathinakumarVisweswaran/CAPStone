@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Rathinakumar on 10/21/2015.
@@ -30,17 +31,20 @@ public class FullyConnectedLayer implements Layer {
     }
 
     @Override
-    public void parseConfig(JSONObject config) {
+    public void parseConfig(JSONObject config, Scanner weightStream) {
         numberOfNeurons = (int)(long) config.get("numberOfNeurons");
         weightLength = (int)(long) config.get("weightLength");
-        JSONArray weights = (JSONArray) config.get("weights");
-        Iterator<Number> weightIterater = weights.iterator();
+
+
         for(int n=0; n<numberOfNeurons; n++)
         {
             DataVolume weightArray = new DataVolume(1,1,weightLength);
             for(int w=0; w<weightLength; w++)
-                weightArray.setElement(0,0,w, weightIterater.next().floatValue());
-            neurons.add(new FullyConnectedNeuron(weightArray, weightIterater.next().floatValue(), n));
+                weightArray.setElement(0,0,w, weightStream.nextFloat());
+            neurons.add(new FullyConnectedNeuron(weightArray, 0.0f, n));
         }
+        //set the bias
+        for(Neuron n : neurons)
+            n.setBias(weightStream.nextFloat());
     }
 }

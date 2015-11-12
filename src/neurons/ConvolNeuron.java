@@ -19,6 +19,11 @@ public class ConvolNeuron implements Neuron{
     }
 
 
+    public void setBias(float bias)
+    {
+        this.bias = bias;
+    }
+
     @Override
     public void processVolume(DataVolume inputVolume, DataVolume outputVolume) {
 

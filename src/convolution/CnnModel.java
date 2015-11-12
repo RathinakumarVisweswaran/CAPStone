@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 import layers.Layer;
 import layers.LayerFactory;
@@ -16,7 +17,7 @@ public class CnnModel {
     public List<Layer> layers;
     float[][][] inputVolume, outputVolume;
 
-    public CnnModel(JSONObject config){
+    public CnnModel(JSONObject config, Scanner wieghtStream){
         this.layers = new ArrayList<>();
         JSONArray layers = (JSONArray) config.get("layers");
         Iterator<JSONObject> iterator = layers.iterator();
@@ -25,7 +26,7 @@ public class CnnModel {
             String type = (String) jsonLayer.get("type");
             JSONObject layerConfig = (JSONObject) jsonLayer.get("layerConfig");
             Layer layer = LayerFactory.getLayerOfType(type);
-            layer.parseConfig(layerConfig);
+            layer.parseConfig(layerConfig, wieghtStream);
             this.layers.add(layer);
         }
     }

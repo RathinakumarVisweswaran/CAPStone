@@ -20,7 +20,7 @@ public class ImageClassifier {
     public Map<String, String> modelMap = new HashMap<>();
 
     public static void main (String[] args) throws Exception {
-        ImageClassifier ic = new ImageClassifier();
+        ImageClassifier classifier = new ImageClassifier();
         //DataVolume in = ic.loadImage("TestImages" + File.separator + "thunderbird-v2-32x32.png");
         float[][][] input  = new float[9][9][3];
         Random r = new Random();
@@ -30,8 +30,10 @@ public class ImageClassifier {
                     input[i][j][k] = r.nextInt(15)* r.nextFloat();
         DataVolume in = new DataVolume(9,9,3);
         in.setData(input);
+
+
         System.out.println("start time : "+System.currentTimeMillis());
-        CnnModel model = ic.loadModel("dummy");
+        CnnModel model = classifier.loadModel("CNN_MINST");
         System.out.println("load complete time : "+System.currentTimeMillis());
         model.evaluate(in);
         System.out.println("model test time : " + System.currentTimeMillis());
@@ -64,27 +66,31 @@ public class ImageClassifier {
 
     private void scanForModels()
     {
-        FilenameFilter jsonFilter = new FilenameFilter() {
+        FileFilter dirFilter = new FileFilter() {
             @Override
-            public boolean accept(File dir, String name) {
-                name = name.toLowerCase();
-                return (name.endsWith(".json"))? true: false;
+            public boolean accept(File file) {
+                return file.isDirectory();
             }
         };
         File modelStore = new File("modelStore");
         if(modelStore.isDirectory())
-            for(File file : modelStore.listFiles(jsonFilter))
-                modelMap.put(file.getName(), file.getPath());
+            for(File file : modelStore.listFiles(dirFilter))
+            {
+                if(file.isDirectory())
+                    modelMap.put(file.getName(), file.getPath());
+            }
         else
             modelStore.mkdir();
     }
 
     public CnnModel loadModel(String modelName) throws Exception
     {
-        String modelJson = "src"+File.separator+"modelStore"+ File.separator+""+modelName+".json";
+        File modelConfig = new File(modelMap.get(modelName)+File.separator+"config.json");
+        Scanner weightStream = new Scanner(new File(modelMap.get(modelName)+File.separator+"weights.txt"));
+        //String modelJson = "src"+File.separator+"modelStore"+ File.separator+""+modelName+".json";
         JSONParser parser = new JSONParser();
-        JSONObject config = (JSONObject)parser.parse(new FileReader(modelJson));
-        CnnModel model = new CnnModel(config);
+        JSONObject config = (JSONObject)parser.parse(new FileReader(modelConfig));
+        CnnModel model = new CnnModel(config, weightStream);
         return model;
     }
 

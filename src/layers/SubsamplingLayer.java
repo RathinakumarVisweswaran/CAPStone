@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * Created by Rathinakumar on 10/18/2015.
@@ -43,7 +44,7 @@ public class SubsamplingLayer implements Layer{
     }
 
     @Override
-    public void parseConfig(JSONObject config) {
+    public void parseConfig(JSONObject config, Scanner weightStream) {
         JSONArray dimensions = (JSONArray) config.get("dimension");
         Iterator<Number> dimIterator = dimensions.iterator();
         height = dimIterator.next().intValue();
