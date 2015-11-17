@@ -9,9 +9,9 @@ public class FullyConnectedNeuron implements Neuron {
 
     DataVolume weights;
     int position=0;
-    float bias;
+    double bias;
 
-    public FullyConnectedNeuron(DataVolume weights, float bias, int position)
+    public FullyConnectedNeuron(DataVolume weights, double bias, int position)
     {
         this.weights = weights;
         this.position = position;
@@ -19,7 +19,7 @@ public class FullyConnectedNeuron implements Neuron {
     }
 
     @Override
-    public void setBias(float bias)
+    public void setBias(double bias)
     {
         this.bias = bias;
     }
@@ -27,7 +27,7 @@ public class FullyConnectedNeuron implements Neuron {
     @Override
     public void processVolume(DataVolume inputVolume, DataVolume outputVolume) {
         int wight=0;
-        float sum = 0.0f;
+        double sum = 0.0f;
         for(int h=0; h<inputVolume.height; h++)
             for(int w=0; w<inputVolume.width; w++)
                 for(int d=0; d<inputVolume.depth; d++)

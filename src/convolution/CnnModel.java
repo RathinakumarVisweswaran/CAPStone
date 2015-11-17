@@ -35,6 +35,6 @@ public class CnnModel {
     {
         for(Layer l : layers)
             volume = l.processVolume(volume);
-
+        volume.print();
     }
 }

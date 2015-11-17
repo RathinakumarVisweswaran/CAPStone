@@ -8,5 +8,5 @@ import convolution.DataVolume;
 public interface Neuron {
 
     public void processVolume(DataVolume inputVolume, DataVolume outputVolume);
-    public void setBias(float bias);
+    public void setBias(double bias);
 }

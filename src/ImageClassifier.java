@@ -22,13 +22,14 @@ public class ImageClassifier {
     public static void main (String[] args) throws Exception {
         ImageClassifier classifier = new ImageClassifier();
         //DataVolume in = ic.loadImage("TestImages" + File.separator + "thunderbird-v2-32x32.png");
-        float[][][] input  = new float[9][9][3];
+        double[][][] input  = new double[28][28][1];
         Random r = new Random();
-        for(int i=0;i<9; i++)
-            for(int j=0;j<9; j++)
-                for(int k=0;k<3; k++)
-                    input[i][j][k] = r.nextInt(15)* r.nextFloat();
-        DataVolume in = new DataVolume(9,9,3);
+        Scanner testData = new Scanner(new File("modelStore//CNN_MINST//test.txt"));
+        for(int i=0;i<28; i++)
+            for(int j=0;j<28; j++)
+                for(int k=0;k<1; k++)
+                    input[i][j][k] = testData.nextDouble();
+        DataVolume in = new DataVolume(28,28,1);
         in.setData(input);
 
 

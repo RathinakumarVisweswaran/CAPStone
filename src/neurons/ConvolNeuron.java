@@ -9,17 +9,16 @@ public class ConvolNeuron implements Neuron{
 
     DataVolume weightMatrix;
     int stride;
-    float bias;
+    double bias;
     int position=-1;
-    public ConvolNeuron(DataVolume weightMatrix, float bias, int featureNumber, int stride) {
+    public ConvolNeuron(DataVolume weightMatrix, double bias, int featureNumber, int stride) {
         this.weightMatrix = weightMatrix;
         this.position = featureNumber;
         this.bias = bias;
         this.stride = stride;
     }
 
-
-    public void setBias(float bias)
+    public void setBias(double bias)
     {
         this.bias = bias;
     }
@@ -30,7 +29,7 @@ public class ConvolNeuron implements Neuron{
         for (int h=0; h<outputVolume.height; h++)
             for (int w=0; w<outputVolume.height; w++)
             {
-                float sum = 0.0f;
+                double sum = 0;
                 for(int hh=0; hh<weightMatrix.height; hh++)
                     for(int ww=0; ww<weightMatrix.width; ww++)
                         for(int dd=0; dd<weightMatrix.depth; dd++)

@@ -13,11 +13,9 @@ import java.util.Scanner;
 public class SubsamplingLayer implements Layer{
 
     int height, width, stride;
+    String activationFunction;
 
-    public SubsamplingLayer()
-    {
-
-    }
+    public SubsamplingLayer() {}
 
     public SubsamplingLayer(int height, int width, int stride) {
         this.height = height;
@@ -34,12 +32,13 @@ public class SubsamplingLayer implements Layer{
             for(int h=0; h<outputVolume.height; h++)
                 for(int w=0; w<outputVolume.width; w++)
                 {
-                    float max = Float.MIN_VALUE;
+                    double max = Double.MIN_VALUE;
                     for(int hh=0; hh<height; hh++)
                         for(int ww=0; ww<width; ww++)
                             max = Math.max(max, inputVolume.data[h*stride + hh][w*stride +ww][d]);
                     outputVolume.data[h][w][d] = max;
                 }
+        outputVolume.activate(activationFunction);
         return outputVolume;
     }
 
@@ -50,5 +49,6 @@ public class SubsamplingLayer implements Layer{
         height = dimIterator.next().intValue();
         width = dimIterator.next().intValue();
         stride = (int)(long)config.get("stride");
+        activationFunction = (String) config.get("activation");
     }
 }

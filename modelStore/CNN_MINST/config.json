@@ -22,14 +22,16 @@
       "type":"subSampling",
       "layerConfig": {
         "stride":2,
-        "dimension": [2,2]
+        "dimension": [2,2],
+        "activation":"sigmoid"
       }
     },
     {
       "type":"fullyConnected",
       "layerConfig":  {
         "numberOfNeurons":10,
-        "weightLength":486
+        "weightLength":486,
+        "activation":"softmax"
       }
     }
   ]

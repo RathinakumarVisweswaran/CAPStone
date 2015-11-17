@@ -19,6 +19,7 @@ public class ConvolutionLayer implements Layer {
     int numberOfFeatures = 6;
     int stride = 2;
     int padding = 1;
+    String activationFunction;
     int filterHeight, filterWidth, filterDepth;
     List<Neuron> neurons;
 
@@ -34,6 +35,7 @@ public class ConvolutionLayer implements Layer {
 
         for(Neuron neuron : neurons)
             neuron.processVolume(inputVolume, outputVolume);
+        outputVolume.activate(activationFunction);
         return outputVolume;
     }
 
@@ -61,7 +63,11 @@ public class ConvolutionLayer implements Layer {
         filterHeight = dimIterater.next().intValue();
         filterWidth = dimIterater.next().intValue();
         filterDepth = dimIterater.next().intValue();
+        activationFunction = (String) config.get("activation");
 
+        List<Double> biasList = new ArrayList<>();
+        for(int f=0; f<numberOfFeatures; f++)
+            biasList.add(weightStream.nextDouble());
 
         for(int feature=0; feature<numberOfFeatures; feature++)
         {
@@ -69,13 +75,10 @@ public class ConvolutionLayer implements Layer {
             for(int d=0; d<filterDepth; d++)
                 for(int h=0; h< filterHeight; h++)
                     for(int w=0; w<filterWidth; w++)
-                        weightVolume.data[h][w][d] = weightStream.nextFloat();
+                        weightVolume.data[h][w][d] = weightStream.nextDouble();
             ConvolNeuron convNeuron = new ConvolNeuron(weightVolume, 0.0f, feature, stride);
+            convNeuron.setBias(biasList.get(feature));
             neurons.add(convNeuron);
         }
-        //set the bias
-        for(Neuron n : neurons)
-            n.setBias(weightStream.nextFloat());
-
     }
 }
