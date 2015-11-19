@@ -27,7 +27,7 @@ public class ConvolNeuron implements Neuron{
     public void processVolume(DataVolume inputVolume, DataVolume outputVolume) {
 
         for (int h=0; h<outputVolume.height; h++)
-            for (int w=0; w<outputVolume.height; w++)
+            for (int w=0; w<outputVolume.width; w++)
             {
                 double sum = 0;
                 for(int hh=0; hh<weightMatrix.height; hh++)

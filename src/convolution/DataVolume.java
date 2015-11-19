@@ -1,5 +1,7 @@
 package convolution;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 
 /**
@@ -51,12 +53,17 @@ public class DataVolume {
 
     private boolean softmax()
     {
-        double sum = 0;
+        double sum = 0, max = Double.MIN_VALUE;
+        for(int h=0; h<height; h++)
+            for(int w=0; w<width; w++)
+                for(int d=0; d<depth; d++)
+                    if(data[h][w][d]>max) max = data[h][w][d];
+
         for(int h=0; h<height; h++)
             for(int w=0; w<width; w++)
                 for(int d=0; d<depth; d++)
                 {
-                    data[h][w][d] = Math.exp(data[h][w][d]);
+                    data[h][w][d] = Math.exp(data[h][w][d] - max);
                     sum+=data[h][w][d];
                 }
 
@@ -131,25 +138,29 @@ public class DataVolume {
         }
     }
 
-    public void print() {
-        System.out.print("[");
+    @Override
+    public String toString() {
+        NumberFormat formatter = new DecimalFormat("#0.000");
+        StringBuffer str = new StringBuffer();
+        str.append("[");
         for(int d=0; d< depth; d++)
         {
-            System.out.print("[");
+            str.append("[");
             for(int h=0; h<height; h++) {
-                System.out.print("[");
+                str.append("[");
                 for (int w = 0; w < width; w++)
                 {
-                    System.out.print(data[h][w][d]);
-                    System.out.print((w==width-1)? "":", ");
+                    str.append(formatter.format(data[h][w][d]));
+                    str.append((w==width-1)? "":", ");
                 }
-                System.out.print("]");
-                if(h<height-1)System.out.println();
+                str.append("]");
+                if(h<height-1)str.append("\n");
             }
-            System.out.print("]");
-            if(d<depth-1)System.out.println();
+            str.append("]");
+            if(d<depth-1)str.append("\n");
         }
-        System.out.print("]");
-        System.out.println();
+        str.append("]");
+        str.append("\n");
+        return str.toString();
     }
 }

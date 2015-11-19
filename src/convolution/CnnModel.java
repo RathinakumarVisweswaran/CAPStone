@@ -35,6 +35,10 @@ public class CnnModel {
     {
         for(Layer l : layers)
             volume = l.processVolume(volume);
-        volume.print();
+        System.out.println(volume);
+        double sum = 0d;
+        for(int i=0; i<2; i++)
+            sum+=volume.data[0][0][i];
+        System.out.println(sum);
     }
 }

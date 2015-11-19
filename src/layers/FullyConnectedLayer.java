@@ -38,17 +38,17 @@ public class FullyConnectedLayer implements Layer {
         activationFunction = (String) config.get("activation");
 
         List<Double> biasList = new ArrayList<>();
-        for(int f=0; f<numberOfNeurons; f++)
-            biasList.add(weightStream.nextDouble());
 
         for(int n=0; n<numberOfNeurons; n++)
         {
             DataVolume weightArray = new DataVolume(1,1,weightLength);
             for(int w=0; w<weightLength; w++)
-                weightArray.setElement(0,0,w, weightStream.nextFloat());
-            FullyConnectedNeuron fc = new FullyConnectedNeuron(weightArray, 0.0f, n);
-            fc.setBias(biasList.get(n));
+                weightArray.setElement(0,0,w, weightStream.nextDouble());
+            FullyConnectedNeuron fc = new FullyConnectedNeuron(weightArray, 0.0d, n);
             neurons.add(fc);
         }
+
+        for(Neuron n : neurons)
+            n.setBias(weightStream.nextDouble());
     }
 }

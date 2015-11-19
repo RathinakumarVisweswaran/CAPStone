@@ -22,8 +22,7 @@
       "type":"subSampling",
       "layerConfig": {
         "stride":2,
-        "dimension": [2,2],
-        "activation":"sigmoid"
+        "dimension": [2,2]
       }
     },
     {

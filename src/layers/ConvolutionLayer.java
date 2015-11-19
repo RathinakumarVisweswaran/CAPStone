@@ -69,15 +69,20 @@ public class ConvolutionLayer implements Layer {
         for(int f=0; f<numberOfFeatures; f++)
             biasList.add(weightStream.nextDouble());
 
-        for(int feature=0; feature<numberOfFeatures; feature++)
+        DataVolume[] dataVolumes = new DataVolume[numberOfFeatures];
+        for(int f=0; f<numberOfFeatures; f++)
+            dataVolumes[f] = new DataVolume(filterHeight,filterWidth,filterDepth);
+
+        for(int w=0; w<filterWidth; w++)
+            for(int h=0; h< filterHeight; h++)
+                for(int d=0; d<filterDepth; d++)
+                    for(int f=0; f<numberOfFeatures; f++)
+                        dataVolumes[f].data[h][w][d] = weightStream.nextDouble();
+
+        for(int f=0; f<numberOfFeatures; f++)
         {
-            DataVolume weightVolume = new DataVolume(filterHeight,filterWidth,filterDepth);
-            for(int d=0; d<filterDepth; d++)
-                for(int h=0; h< filterHeight; h++)
-                    for(int w=0; w<filterWidth; w++)
-                        weightVolume.data[h][w][d] = weightStream.nextDouble();
-            ConvolNeuron convNeuron = new ConvolNeuron(weightVolume, 0.0f, feature, stride);
-            convNeuron.setBias(biasList.get(feature));
+            ConvolNeuron convNeuron = new ConvolNeuron(dataVolumes[f], 0.0f, f, stride);
+            convNeuron.setBias(biasList.get(f));
             neurons.add(convNeuron);
         }
     }

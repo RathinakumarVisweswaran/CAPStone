@@ -26,7 +26,7 @@ public class SubsamplingLayer implements Layer{
     @Override
     public DataVolume processVolume(DataVolume inputVolume) {
 
-        DataVolume outputVolume = new DataVolume(inputVolume.height/stride -height, inputVolume.width/stride - width, inputVolume.depth);
+        DataVolume outputVolume = new DataVolume(inputVolume.height/stride, inputVolume.width/stride, inputVolume.depth);
 
         for(int d=0; d<outputVolume.depth; d++)
             for(int h=0; h<outputVolume.height; h++)
@@ -38,7 +38,7 @@ public class SubsamplingLayer implements Layer{
                             max = Math.max(max, inputVolume.data[h*stride + hh][w*stride +ww][d]);
                     outputVolume.data[h][w][d] = max;
                 }
-        outputVolume.activate(activationFunction);
+        //outputVolume.activate(activationFunction);
         return outputVolume;
     }
 
