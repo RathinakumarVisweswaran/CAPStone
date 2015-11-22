@@ -150,7 +150,7 @@ public class DataVolume {
                 str.append("[");
                 for (int w = 0; w < width; w++)
                 {
-                    str.append(formatter.format(data[h][w][d]));
+                    str.append(data[h][w][d]);
                     str.append((w==width-1)? "":", ");
                 }
                 str.append("]");
