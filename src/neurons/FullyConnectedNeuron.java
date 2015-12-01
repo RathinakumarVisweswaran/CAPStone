@@ -28,9 +28,9 @@ public class FullyConnectedNeuron implements Neuron {
     public void processVolume(DataVolume inputVolume, DataVolume outputVolume) {
         int wight=0;
         double sum = 0.0f;
-        for(int h=0; h<inputVolume.height; h++)
-            for(int w=0; w<inputVolume.width; w++)
-                for(int d=0; d<inputVolume.depth; d++)
+        for(int d=0; d<inputVolume.depth; d++)
+            for(int h=0; h<inputVolume.height; h++)
+                for(int w=0; w<inputVolume.width; w++)
                     sum+=(weights.getElement(0,0,wight++)*inputVolume.getElement(h,w,d));
         outputVolume.setElement(0,0,position, sum+bias);
     }

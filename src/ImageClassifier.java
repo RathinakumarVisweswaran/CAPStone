@@ -20,25 +20,54 @@ public class ImageClassifier {
     public Map<String, String> modelMap = new HashMap<>();
 
     public static void main (String[] args) throws Exception {
+        testIRIS();
+    }
+
+
+    public static void testMNIST() throws Exception {
         ImageClassifier classifier = new ImageClassifier();
-        //DataVolume in = ic.loadImage("TestImages" + File.separator + "thunderbird-v2-32x32.png");
-        double[][][] input  = new double[4][4][3];
+        int inH = 28, inW=28, inD=1;
+        double[][][] input  = new double[inH][inW][inD];
         Random r = new Random();
         Scanner testData = new Scanner(new File("modelStore//CNN_MINST//test.txt"));
-
-        for(int k=0;k<3; k++)
-            for(int i=0;i<4; i++)
-                for(int j=0;j<4; j++)
-                    input[i][j][k] = testData.nextDouble();
-        DataVolume in = new DataVolume(4,4,3);
-        in.setData(input);
-
-
-        System.out.println("start time : "+System.currentTimeMillis());
+        Long l1 = System.currentTimeMillis();
         CnnModel model = classifier.loadModel("CNN_MINST");
-        System.out.println("load complete time : "+System.currentTimeMillis());
-        model.evaluate(in);
-        System.out.println("model test time : " + System.currentTimeMillis());
+        System.out.println("model load time : "+ (System.currentTimeMillis() - l1));
+        while(testData.hasNext())
+        {
+            for(int k=0;k<inD; k++)
+                for(int i=0;i<inH; i++)
+                    for(int j=0;j<inW; j++)
+                        input[i][j][k] = testData.nextDouble();
+            DataVolume in = new DataVolume(inH,inW,inD);
+            in.setData(input);
+            Long l = System.currentTimeMillis();
+            model.evaluate(in);
+            System.out.println("model test time : " + (System.currentTimeMillis()-l));
+        }
+    }
+
+    public static void testIRIS() throws Exception {
+        ImageClassifier classifier = new ImageClassifier();
+        int inH = 2, inW=2, inD=1;
+        double[][][] input  = new double[inH][inW][inD];
+        Random r = new Random();
+        Scanner testData = new Scanner(new File("modelStore//CNN_Iris//test.txt"));
+        Long l1 = System.currentTimeMillis();
+        CnnModel model = classifier.loadModel("CNN_Iris");
+        System.out.println("model load time : "+ (System.currentTimeMillis() - l1));
+        while(testData.hasNext())
+        {
+            for(int k=0;k<inD; k++)
+                for(int i=0;i<inH; i++)
+                    for(int j=0;j<inW; j++)
+                        input[i][j][k] = testData.nextDouble();
+            DataVolume in = new DataVolume(inH,inW,inD);
+            in.setData(input);
+            Long l = System.currentTimeMillis();
+            model.evaluate(in);
+            System.out.println("model test time : " + (System.currentTimeMillis()-l));
+        }
     }
 
     public DataVolume loadImage(String img) throws IOException {

@@ -1,0 +1,30 @@
+{
+  "layers": [
+    {
+      "type" : "input",
+      "layerConfig": {
+        "height":2,
+        "width":2,
+        "depth":1
+      }
+    },
+    {
+      "type":"convolution",
+      "layerConfig": {
+        "numberOfFeatures": 6,
+        "padding": 0,
+        "stride": 1,
+        "filterDimension": [1,1,1],
+        "activation":"ReLu"
+      }
+    },
+    {
+      "type":"fullyConnected",
+      "layerConfig":  {
+        "numberOfNeurons":3,
+        "weightLength":24,
+        "activation":"softmax"
+      }
+    }
+  ]
+}

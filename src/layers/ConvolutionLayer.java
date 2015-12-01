@@ -35,7 +35,7 @@ public class ConvolutionLayer implements Layer {
 
         for(Neuron neuron : neurons)
             neuron.processVolume(inputVolume, outputVolume);
-        //outputVolume.activate(activationFunction);
+        outputVolume.activate(activationFunction);
         return outputVolume;
     }
 
