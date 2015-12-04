@@ -73,10 +73,11 @@ public class ConvolutionLayer implements Layer {
         for(int f=0; f<numberOfFeatures; f++)
             dataVolumes[f] = new DataVolume(filterHeight,filterWidth,filterDepth);
 
-        for(int f=0; f<numberOfFeatures; f++)
-            for(int d=0; d<filterDepth; d++)
+
+        for(int d=0; d<filterDepth; d++)
+            for(int w=0; w<filterWidth; w++)
                 for(int h=0; h< filterHeight; h++)
-                    for(int w=0; w<filterWidth; w++)
+                    for(int f=0; f<numberOfFeatures; f++)
                         dataVolumes[f].data[h][w][d] = weightStream.nextDouble();
 
         for(int f=0; f<numberOfFeatures; f++)

@@ -39,6 +39,5 @@ public class CnnModel {
         double sum = 0d;
         for(int i=0; i<2; i++)
             sum+=volume.data[0][0][i];
-        System.out.println(sum);
     }
 }

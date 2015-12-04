@@ -13,7 +13,7 @@
       "layerConfig": {
         "numberOfFeatures": 6,
         "padding": 0,
-        "stride": 1,
+        "stride": 2,
         "filterDimension": [10,10,1],
         "activation":"ReLu"
       }
@@ -29,7 +29,7 @@
       "type":"fullyConnected",
       "layerConfig":  {
         "numberOfNeurons":10,
-        "weightLength":486,
+        "weightLength":150,
         "activation":"softmax"
       }
     }

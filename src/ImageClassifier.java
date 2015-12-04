@@ -20,7 +20,7 @@ public class ImageClassifier {
     public Map<String, String> modelMap = new HashMap<>();
 
     public static void main (String[] args) throws Exception {
-        testIRIS();
+        testMNIST();
     }
 
 
@@ -55,6 +55,30 @@ public class ImageClassifier {
         Scanner testData = new Scanner(new File("modelStore//CNN_Iris//test.txt"));
         Long l1 = System.currentTimeMillis();
         CnnModel model = classifier.loadModel("CNN_Iris");
+        System.out.println("model load time : "+ (System.currentTimeMillis() - l1));
+        while(testData.hasNext())
+        {
+            for(int k=0;k<inD; k++)
+                for(int i=0;i<inH; i++)
+                    for(int j=0;j<inW; j++)
+                        input[i][j][k] = testData.nextDouble();
+            DataVolume in = new DataVolume(inH,inW,inD);
+            in.setData(input);
+            Long l = System.currentTimeMillis();
+            model.evaluate(in);
+            System.out.println("model test time : " + (System.currentTimeMillis()-l));
+        }
+    }
+
+    public static void test3Demo() throws Exception {
+        String dir = "Demo3D";
+        ImageClassifier classifier = new ImageClassifier();
+        int inH = 2, inW=2, inD=2;
+        double[][][] input  = new double[inH][inW][inD];
+        Random r = new Random();
+        Scanner testData = new Scanner(new File("modelStore//"+dir+"//test.txt"));
+        Long l1 = System.currentTimeMillis();
+        CnnModel model = classifier.loadModel(dir);
         System.out.println("model load time : "+ (System.currentTimeMillis() - l1));
         while(testData.hasNext())
         {
