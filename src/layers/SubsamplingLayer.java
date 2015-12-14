@@ -1,6 +1,6 @@
 package layers;
 
-import convolution.DataVolume;
+import neurons.DataVolume;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

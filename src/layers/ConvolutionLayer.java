@@ -1,12 +1,11 @@
 package layers;
 
-import convolution.DataVolume;
+import neurons.DataVolume;
 import neurons.ConvolNeuron;
 import neurons.Neuron;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

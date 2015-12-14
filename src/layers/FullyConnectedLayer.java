@@ -1,13 +1,11 @@
 package layers;
 
-import convolution.DataVolume;
+import neurons.DataVolume;
 import neurons.FullyConnectedNeuron;
 import neurons.Neuron;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 

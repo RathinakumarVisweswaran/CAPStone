@@ -1,7 +1,6 @@
 package convolution;
 
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,8 +8,8 @@ import java.util.Scanner;
 
 import layers.Layer;
 import layers.LayerFactory;
+import neurons.DataVolume;
 import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
 
 public class CnnModel {
 
